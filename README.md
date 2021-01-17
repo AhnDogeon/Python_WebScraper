@@ -12,3 +12,15 @@ Using Google Chrome!
 
 
 
+웹스크래퍼란?
+
+- 웹 상의 데이터를 추출하는 것
+
+
+
+What I Make
+
+```text
+StackOverFlow, Indeed 에서 Job Search Scraper 구현
+```
+
