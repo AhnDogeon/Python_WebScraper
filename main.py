@@ -8,12 +8,16 @@ indeed_soup = BeautifulSoup(indeed_result.text, 'html.parser')
 # page a가 div 내 class = pagination으로 되어있음(F12로 확인)
 pagination = indeed_soup.find("div", {"class":"pagination"})
 
-pages = pagination.find_all('a')
+links = pagination.find_all('a')
 
 # pages가 list 이므로 for문 가능
 
-spans = []
-for page in pages:
-    spans.append(page.find('span'))
+pages = []
+for link in links[:-1]:
+    # 여기서 a 태그 안에 span이 하나라면 다음과 같이 안쓰고
+    #pages.append(int(link.find('span').string))
+    # 이렇게 써줘도 된다.
+    pages.append(int(link.string))
 
-spans = spans[:-1]
+pages = pages[:-1]
+max_page = pages[-1]
