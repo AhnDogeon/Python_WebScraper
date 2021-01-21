@@ -1,11 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 
-INDEED_URL = "https://www.indeed.com/jobs?q=python&limit=50"
+LIMIT = 50
+URL = f"https://www.indeed.com/jobs?q=python&limit={LIMIT}"
 
 def extract_indeed_pages():
     # indeed 검색했을 때, HTML가져오기
-    result = requests.get(INDEED_URL)
+    result = requests.get(URL)
     # BS이용 HTML Parse
     soup = BeautifulSoup(result.text, 'html.parser')
     # page a가 div 내 class = pagination으로 되어있음(F12로 확인)
@@ -22,9 +23,13 @@ def extract_indeed_pages():
     # 이렇게 써줘도 된다.
         pages.append(int(link.string))
 
-    pages = pages[:-1]
     max_page = pages[-1]
-    print(max_page)
     return max_page
 
-extract_indeed_pages()
+
+def extract_indeed_jobs(last_pages):
+    jobs = []
+    for page in range(last_pages):
+        result = requests.get(f'{URL}&start={page*LIMIT}')
+        print(result)
+    return jobs
