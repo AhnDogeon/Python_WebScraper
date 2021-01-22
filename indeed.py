@@ -29,7 +29,15 @@ def extract_indeed_pages():
 
 def extract_indeed_jobs(last_pages):
     jobs = []
-    for page in range(last_pages):
-        result = requests.get(f'{URL}&start={page*LIMIT}')
-        print(result)
+    # for page in range(last_pages):
+    result = requests.get(f'{URL}&start={0*LIMIT}')
+    soup = BeautifulSoup(result.text, 'html.parser')
+    results = soup.find_all("div", {"class" : "jobsearch-SerpJobCard"})
+    
+    for result in results:
+        # result는 일자리 목록
+        # h2라는 항목에서 class title은 것들을 추려냄
+        # 그 안에서 anchor이면서 string이 title인 것들을 추려냄
+        title = result.find("h2", {"class": "title"}).find("a")["title"]
+        print(title)
     return jobs
