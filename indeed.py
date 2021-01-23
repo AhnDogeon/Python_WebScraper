@@ -24,28 +24,36 @@ def extract_indeed_pages():
         pages.append(int(link.string))
 
     max_page = pages[-1]
+    print(f"max_page는 {max_page}")
     return max_page
 
+def extract_job(html):
+    # h2라는 항목에서 class title은 것들을 추려냄
+    # 그 안에서 anchor이면서 string이 title인 것들을 추려냄
+    title = html.find("h2", {"class": "title"}).find("a")["title"]
+    company = html.find("span", {"class": "company"})
+    company_anchor = company.find("a")
+
+    if company_anchor is not None:
+        company = str(company_anchor.string)
+    else:
+        company = str(company.string)
+    company = company.strip()
+    location = html.find("div", {"class": "recJobLoc"})["data-rc-loc"]
+    job_id = html["data-jk"]
+    return {"title": title, "company": company, "location": location,
+    "link": f"https://www.indeed.com/viewjob?jk={job_id}"}
 
 def extract_indeed_jobs(last_pages):
     jobs = []
-    # for page in range(last_pages):
-    result = requests.get(f'{URL}&start={0*LIMIT}')
-    soup = BeautifulSoup(result.text, 'html.parser')
-    results = soup.find_all("div", {"class" : "jobsearch-SerpJobCard"})
-    
-    for result in results:
-        # result는 일자리 목록
-        # h2라는 항목에서 class title은 것들을 추려냄
-        # 그 안에서 anchor이면서 string이 title인 것들을 추려냄
-        title = result.find("h2", {"class": "title"}).find("a")["title"]
-        company = result.find("span", {"class": "company"})
-        company_anchor = company.find("a")
-
-        if company_anchor is not None:
-            company = str(company_anchor.string)
-        else:
-            company = str(company.string)
-        company = company.strip()
-        print(company)
+    for page in range(last_pages):
+        print(f"Scrapping page {page}")
+        result = requests.get(f'{URL}&start={page*LIMIT}')
+        soup = BeautifulSoup(result.text, 'html.parser')
+        results = soup.find_all("div", {"class" : "jobsearch-SerpJobCard"})
+        
+        for result in results:
+            # result는 일자리 목록
+            job = extract_job(result)
+            jobs.append(job)
     return jobs
