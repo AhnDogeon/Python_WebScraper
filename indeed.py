@@ -39,5 +39,13 @@ def extract_indeed_jobs(last_pages):
         # h2라는 항목에서 class title은 것들을 추려냄
         # 그 안에서 anchor이면서 string이 title인 것들을 추려냄
         title = result.find("h2", {"class": "title"}).find("a")["title"]
-        print(title)
+        company = result.find("span", {"class": "company"})
+        company_anchor = company.find("a")
+
+        if company_anchor is not None:
+            company = str(company_anchor.string)
+        else:
+            company = str(company.string)
+        company = company.strip()
+        print(company)
     return jobs
