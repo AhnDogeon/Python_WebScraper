@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 LIMIT = 50
 URL = f"https://www.indeed.com/jobs?q=python&limit={LIMIT}"
 
-def extract_indeed_pages():
+def get_last_page():
     # indeed 검색했을 때, HTML가져오기
     result = requests.get(URL)
     # BS이용 HTML Parse
@@ -32,19 +32,21 @@ def extract_job(html):
     # 그 안에서 anchor이면서 string이 title인 것들을 추려냄
     title = html.find("h2", {"class": "title"}).find("a")["title"]
     company = html.find("span", {"class": "company"})
-    company_anchor = company.find("a")
-
-    if company_anchor is not None:
-        company = str(company_anchor.string)
+    if company:
+        company_anchor = company.find("a")
+        if company_anchor is not None:
+            company = str(company_anchor.string)
+        else:
+            company = str(company.string)
+        company = company.strip()
     else:
-        company = str(company.string)
-    company = company.strip()
+        company = None
     location = html.find("div", {"class": "recJobLoc"})["data-rc-loc"]
     job_id = html["data-jk"]
     return {"title": title, "company": company, "location": location,
     "link": f"https://www.indeed.com/viewjob?jk={job_id}"}
 
-def extract_indeed_jobs(last_pages):
+def extract_jobs(last_pages):
     jobs = []
     for page in range(last_pages):
         print(f"Scrapping page {page}")
@@ -57,3 +59,10 @@ def extract_indeed_jobs(last_pages):
             job = extract_job(result)
             jobs.append(job)
     return jobs
+
+
+def get_jobs():
+    last_page = get_last_page()
+    jobs = extract_jobs(last_page)
+    return jobs
+
