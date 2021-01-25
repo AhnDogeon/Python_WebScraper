@@ -14,7 +14,8 @@ def extract_job(html):
     title = html.find("h2", {"class": "mb4"}).find("a")["title"]
     # recursive는 span 안에 span 이 있을 경우 계속 타고 들어가지 않게 한다. (제일 위에 것만 가져옴)
     company, location = html.find("h3", {"class": "fc-black-700"}).find_all("span", recursive = False)
-    company, location = company.get_text(strip=True), location.get_text(strip=True)
+    company = company.get_text(strip=True).strip("-").strip(" \r").strip("\n")
+    location = location.get_text(strip=True).strip("-").strip(" \r").strip("\n")
     print(company)
     print(location)
     return {'title' : title}
