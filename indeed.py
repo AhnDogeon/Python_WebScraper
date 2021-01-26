@@ -24,7 +24,6 @@ def get_last_page():
         pages.append(int(link.string))
 
     max_page = pages[-1]
-    print(f"max_page는 {max_page}")
     return max_page
 
 def extract_job(html):
