@@ -1,0 +1,579 @@
+# Python Learn 정리
+
+
+
+### Scrap!
+
+```text
+step 1. Get the page
+step 2. Make the request
+step 3. Extract the jobs.
+```
+
+requests import하여 step1, 2 수행
+
+
+
+##### CSV란?
+
+Comma Separated Value
+
+각 Col는 ,(콤마)로 구분
+
+각 Row은 new line으로 구분
+
+```text
+CSV save mode
+open('file.csv', mode='w') 등
+mode 가 w일 경우 쓰기모드 -> 쓰기만 되므로 파일을 초기화 후 다시 쓴다.
+```
+
+
+
+
+
+
+
+
+
+### Data type of Python
+
+```text
+Python의 변수 네이밍 규칙은 snake case로 하자
+ex) long_name = "name"
+```
+
+
+
+##### mutable과 immutable
+
+ex) list : mutable, tuple : immutable
+
+```python
+python_list = ['a', 'b', 'c']
+python_typle = ('a', 'b', 'c')
+```
+
+##### Python Modules
+
+docs.python.org에서 Python Module 확인 가능
+
+```python
+from math import ceil, fsum
+print(ceil(1.2))
+print(fsum([1,2,3,4,5,6,7]))
+```
+
+Web Scraper 프로젝트를 진행하며, url 모듈, excel sheet 모듈 등을 사용
+
+서로 다른 파일에서의 함수도 가져오기 가능
+
+main.py에서 calculator.py 내 내가 만든 함수 가져오기 가능
+
+```text
+어떻게 print() 함수는 인자를 무한으로 받아올 수 있지?
+```
+
+
+
+문제
+
+```python
+# https://repl.it/@AhnDogeon/Day-Three-Blueprint#main.py
+    
+"""
+Again, the code is broken, you need to create 4 functions.
+  - add_to_dict: Add a word to a dict.
+  - get_from_dict: Get a word from inside a dict.
+  - update_word: Update a word inside of the dict.
+  - delete_from_dict: Delete a word from the dict.
+
+All this functions should check for errors, follow the comments to see all cases you need to cover.
+
+There should be NO ERRORS from Python in the console.
+"""
+
+def add_to_dict(x_dict, x, y):
+  if x in x_dict:
+    print(f"{x} is already on the dictionary Won't add")
+  else:
+    x_dict[x] = y
+    print(f"{x} has been added")
+
+def get_from_dict(x_dict, x = ""):
+  if (type(x_dict) != type(my_english_dict)):
+    print(f"You need to send a dictionary. You sent {type(x_dict)}")
+  elif x == "":
+    print("You need to send a word to search for")
+  elif x in x_dict:
+    print(f"{x} : The source of life")
+  else:
+    print(f"{x} was not found on this dict")
+
+def update_word(x_dict, x="", y=""):
+  if (type(x_dict) != type(my_english_dict)):
+    print(f"You need to send a dictionary. You sent {type(x_dict)}")
+  elif x == "":
+    print("You need to send a word to search for")
+  elif x not in x_dict:
+    print(f"{x} is not on the dict Can't update non-existing word")
+  elif x in x_dict:
+    x_dict[x] = y
+    print(f"{x} has been updated")
+
+def delete_from_dict(x_dict, x='', y=''):
+  if (type(x_dict) != type(my_english_dict)):
+    print(f"You need to send a dictionary. You sent {type(x_dict)}")
+  elif x == "":
+    print("You need to send a word to search for")
+  elif x not in x_dict:
+    print(f"{x} is not on the dict Can't delete non-existing word")
+  elif x in x_dict:
+    del(x_dict[x])
+    print(f"{x} has been delete")
+
+# \/\/\/\/\/\/\ DO NOT TOUCH  \/\/\/\/\/\/\
+
+import os
+
+os.system('clear')
+
+
+my_english_dict = {}
+
+print("\n###### add_to_dict ######\n")
+
+# Should not work. First argument should be a dict.
+print('add_to_dict("hello", "kimchi"):')
+# add_to_dict("hello", "kimchi")
+
+# Should not work. Definition is required.
+print('\nadd_to_dict(my_english_dict, "kimchi"):')
+# add_to_dict(my_english_dict, "kimchi")
+
+# Should work.
+print('\nadd_to_dict(my_english_dict, "kimchi", "The source of life."):')
+add_to_dict(my_english_dict, "kimchi", "The source of life.")
+
+# Should not work. kimchi is already on the dict
+print('\nadd_to_dict(my_english_dict, "kimchi", "My fav. food"):')
+add_to_dict(my_english_dict, "kimchi", "My fav. food")
+
+print("\n\n###### get_from_dict ######\n")
+
+# Should not work. First argument should be a dict.
+print('\nget_from_dict("hello", "kimchi"):')
+get_from_dict("hello", "kimchi")
+
+# Should not work. Word to search from is required.
+print('\nget_from_dict(my_english_dict):')
+get_from_dict(my_english_dict)
+
+# Should not work. Word is not found.
+print('\nget_from_dict(my_english_dict, "galbi"):')
+get_from_dict(my_english_dict, "galbi")
+
+# Should work and print the definiton of 'kimchi'
+print('\nget_from_dict(my_english_dict, "kimchi"):')
+get_from_dict(my_english_dict, "kimchi")
+
+print("\n\n###### update_word ######\n")
+
+# Should not work. First argument should be a dict.
+print('\nupdate_word("hello", "kimchi"):')
+update_word("hello", "kimchi")
+
+# Should not work. Word and definiton are required.
+print('\nupdate_word(my_english_dict, "kimchi"):')
+update_word(my_english_dict, "kimchi")
+
+# Should not work. Word not found.
+print('\nupdate_word(my_english_dict, "galbi", "Love it."):')
+update_word(my_english_dict, "galbi", "Love it.")
+
+# Should work.
+print('\nupdate_word(my_english_dict, "kimchi", "Food from the gods."):')
+update_word(my_english_dict, "kimchi", "Food from the gods.")
+
+# Check the new value.
+print('\nget_from_dict(my_english_dict, "kimchi"):')
+get_from_dict(my_english_dict, "kimchi")
+
+
+print("\n\n###### delete_from_dict ######\n")
+
+# Should not work. First argument should be a dict.
+print('\ndelete_from_dict("hello", "kimchi"):')
+delete_from_dict("hello", "kimchi")
+
+# Should not work. Word to delete is required.
+print('\ndelete_from_dict(my_english_dict):')
+delete_from_dict(my_english_dict)
+
+# Should not work. Word not found.
+print('\ndelete_from_dict(my_english_dict, "galbi"):')
+delete_from_dict(my_english_dict, "galbi")
+
+# Should work.
+print('\ndelete_from_dict(my_english_dict, "kimchi"):')
+delete_from_dict(my_english_dict, "kimchi")
+
+# Check that it does not exist
+print('\nget_from_dict(my_english_dict, "kimchi"):')
+get_from_dict(my_english_dict, "kimchi")
+
+# \/\/\/\/\/\/\ END DO NOT TOUCH  \/\/\/\/\/\/\
+
+```
+
+#### 정답
+
+```PYTHON
+def add_to_dict(a_dict, word="", definition=""):
+  if type(a_dict) is not dict:
+    print("You need to send a dictionary. You sent:", type(a_dict))
+  elif word == '' or definition == '':
+    print("You need to send a word and a definition.")
+  else:
+    if word in a_dict:
+      print(f"{word} is already on the dictionary. Won't add.")
+    else:
+      a_dict[word] = definition
+      print(word,"has been added.")
+
+
+def get_from_dict(a_dict, word=""):
+  if type(a_dict) is not dict:
+    print("You need to send a dictionary. You sent:", type(a_dict))
+  elif word == '':
+    print("You need to send a word to search for.")
+  else:
+    if word not in a_dict:
+      print(f"{word} was not found in this dict.")
+    else:
+      print(f"{word}: {a_dict[word]}") 
+
+
+def update_word(a_dict, word="", definition=""):
+  if type(a_dict) is not dict:
+    print("You need to send a dictionary. You sent:", type(a_dict))
+  elif word == "" or definition == "":
+    print("You need to send a word and a definition to update.")
+  else:
+    if word not in a_dict:
+      print(f"{word} is not on the dict. Can't update non-existing word.")
+    else:
+      a_dict[word] = definition
+      print(word, "has been updated to:", definition)
+
+
+def delete_from_dict(a_dict, word=""):
+  if type(a_dict) is not dict:
+    print("You need to send a dictionary. You sent:", type(a_dict))
+  elif word == "":
+    print("You need to specify a word to delete.")
+  else:
+    if word not in a_dict:
+      print(f"{word} is not in this dict. Won't delete.")
+    else:
+      del a_dict[word]
+      print(f"{word} has been deleted.")
+
+# \/\/\/\/\/\/\ DO NOT TOUCH  \/\/\/\/\/\/\
+
+import os
+
+os.system('clear')
+
+
+my_english_dict = {}
+
+print("\n###### add_to_dict ######\n")
+
+# Should not work. First argument should be a dict.
+print('add_to_dict("hello", "kimchi"):')
+add_to_dict("hello", "kimchi")
+
+# Should not work. Definition is required.
+print('\nadd_to_dict(my_english_dict, "kimchi"):')
+add_to_dict(my_english_dict, "kimchi")
+
+# Should work.
+print('\nadd_to_dict(my_english_dict, "kimchi", "The source of life."):')
+add_to_dict(my_english_dict, "kimchi", "The source of life.")
+
+# Should not work. kimchi is already on the dict
+print('\nadd_to_dict(my_english_dict, "kimchi", "My fav. food"):')
+add_to_dict(my_english_dict, "kimchi", "My fav. food")
+
+
+print("\n\n###### get_from_dict ######\n")
+
+# Should not work. First argument should be a dict.
+print('\nget_from_dict("hello", "kimchi"):')
+get_from_dict("hello", "kimchi")
+
+# Should not work. Word to search from is required.
+print('\nget_from_dict(my_english_dict):')
+get_from_dict(my_english_dict)
+
+# Should not work. Word is not found.
+print('\nget_from_dict(my_english_dict, "galbi"):')
+get_from_dict(my_english_dict, "galbi")
+
+# Should work and print the definiton of 'kimchi'
+print('\nget_from_dict(my_english_dict, "kimchi"):')
+get_from_dict(my_english_dict, "kimchi")
+
+print("\n\n###### update_word ######\n")
+
+# Should not work. First argument should be a dict.
+print('\nupdate_word("hello", "kimchi"):')
+update_word("hello", "kimchi")
+
+# Should not work. Word and definiton are required.
+print('\nupdate_word(my_english_dict, "kimchi"):')
+update_word(my_english_dict, "kimchi")
+
+# Should not work. Word not found.
+print('\nupdate_word(my_english_dict, "galbi", "Love it."):')
+update_word(my_english_dict, "galbi", "Love it.")
+
+# Should work.
+print('\nupdate_word(my_english_dict, "kimchi", "Food from the gods."):')
+update_word(my_english_dict, "kimchi", "Food from the gods.")
+
+# Check the new value.
+print('\nget_from_dict(my_english_dict, "kimchi"):')
+get_from_dict(my_english_dict, "kimchi")
+
+
+print("\n\n###### delete_from_dict ######\n")
+
+# Should not work. First argument should be a dict.
+print('\ndelete_from_dict("hello", "kimchi"):')
+delete_from_dict("hello", "kimchi")
+
+# Should not work. Word to delete is required.
+print('\ndelete_from_dict(my_english_dict):')
+delete_from_dict(my_english_dict)
+
+# Should not work. Word not found.
+print('\ndelete_from_dict(my_english_dict, "galbi"):')
+delete_from_dict(my_english_dict, "galbi")
+
+# Should work.
+print('\ndelete_from_dict(my_english_dict, "kimchi"):')
+delete_from_dict(my_english_dict, "kimchi")
+
+# Check that it does not exist
+print('\nget_from_dict(my_english_dict, "kimchi"):')
+get_from_dict(my_english_dict, "kimchi")
+
+# \/\/\/\/\/\/\ END DO NOT TOUCH  \/\/\/\/\/\/\
+```
+
+#### 정상적인 웹 test
+
+```python
+import os
+import requests
+
+def restart():
+  answer = str(input("Do you want to start over? y/n ")).lower()
+  if answer == "y" or answer =="n":
+    if answer == "n":
+        print("k. bye!")
+        return
+    elif answer == "y":
+      main()
+  else:
+    print("That's not a valid answer")
+    restart()
+
+
+def main():
+  os.system('clear')
+  print("Welcome to IsItDown.py!\nPlease write a URL or URLs you want to check. (separated by comma)")
+  urls = str(input()).lower().split(",")
+  for url in urls:
+    url = url.strip()
+    if "." not in url:
+      print(url, "is not a valid URL.")
+    else:
+      if "http" not in url:
+        url = f"http://{url}"
+      try:
+        request = requests.get(url)
+        if request.status_code == 200:
+          print(url,"is up!")
+        else:
+          print(url, "is down!")
+      except:
+          print(url, "is down!")
+  restart()
+
+
+main()
+```
+
+#### 210201
+
+```python
+import os
+import requests
+from bs4 import BeautifulSoup
+from babel.numbers import format_currency
+
+os.system("clear")
+
+
+code_url = "https://www.iban.com/currency-codes"
+currency_url = "https://transferwise.com/gb/currency-converter/"
+
+
+countries = []
+
+codes_request = requests.get(code_url)
+codes_soup = BeautifulSoup(codes_request.text, "html.parser")
+
+table = codes_soup.find("table")
+rows = table.find_all("tr")[1:]
+
+for row in rows:
+  items = row.find_all("td")
+  name = items[0].text
+  code =items[2].text
+  if name and code:
+    if name != "No universal currency":
+      country = {
+        'name':name.capitalize(),
+        'code': code
+      }
+      countries.append(country)
+
+
+def ask_country(text):
+  print(text)
+  try:
+    choice = int(input("#: "))
+    if choice > len(countries):
+      print("Choose a number from the list.")
+      return ask_country(text)
+    else:
+      print(f"{countries[choice]['name']}")
+      return countries[choice]
+  except ValueError:
+    print("That wasn't a number.")
+    return ask_country(text)
+
+
+def ask_amount(a_country, b_country):
+  try:
+    print(f"\nHow many {a_country['code']} do you want to convert to {b_country['code']}?")
+    amount = int(input())
+    return amount
+  except ValueError:
+    print("That wasn't a number.")
+    return ask_amount(a_country, b_country)
+  
+
+
+print("Welcome to CurrencyConvert PRO 2000\n")
+for index, country in enumerate(countries):
+  print(f"#{index} {country['name']}")
+
+user_country = ask_country("\nWhere are you from? Choose a country by number.\n")
+target_country = ask_country("\nNow choose another country.\n")
+
+
+amount = ask_amount(user_country, target_country)
+
+from_code = user_country['code']
+to_code = target_country['code']
+
+currency_request = requests.get(f"{currency_url}{from_code}-to-{to_code}-rate?amount={amount}")
+currency_soup = BeautifulSoup(currency_request.text, "html.parser")
+result = currency_soup.find("input", {"id":"cc-amount-to"})
+if result:
+  result = result['value']
+  amount = format_currency(amount, from_code, locale="ko_KR")
+  result = format_currency(result, to_code, locale="ko_KR")
+  print(f"{amount} is {result}")
+```
+
+#### 알바천국 스크랩
+
+```python
+import os
+import csv
+import requests
+from bs4 import BeautifulSoup
+
+os.system("clear")
+
+
+def write_company(company):
+    file = open(f"{company['name']}.csv", mode="w")
+    writer = csv.writer(file)
+    writer.writerow(["place", "title", "time", "pay", "date"])
+    for job in company["jobs"]:
+      writer.writerow(list(job.values()))
+
+
+alba_url = "http://www.alba.co.kr"
+
+alba_request = requests.get(alba_url)
+alba_soup = BeautifulSoup(alba_request.text, "html.parser")
+main = alba_soup.find("div", {"id": "MainSuperBrand"})
+brands = main.find_all("li", {"class": "impact"})
+for brand in brands:
+    link = brand.find("a", {"class": "goodsBox-info"})
+    name = brand.find("span", {"class": "company"})
+    if link and name:
+        link = link["href"]
+        name = name.text
+        company = {'name': name, 'jobs': []}
+        jobs_request = requests.get(link)
+        jobs_soup = BeautifulSoup(jobs_request.text, "html.parser")
+        tbody = jobs_soup.find("div", {"id": "NormalInfo"}).find("tbody")
+        rows = tbody.find_all("tr", {"class": ""})
+        for row in rows:
+            local = row.find("td", {"class": "local"})
+            if local:
+                local = local.text.replace(u'\xa0', ' ')
+            title = row.find("td", {"class": "title"})
+            if title:
+                title = title.find("a").find("span", {
+                    "class": "company"
+                }).text.strip()
+                title = title.replace(u'\xa0', ' ')
+            time = row.find("td", {"class": "data"})
+            if time:
+                time = time.text.replace(u'\xa0', ' ')
+            pay = row.find("td", {"class": "pay"})
+            if pay:
+                pay = pay.text.replace(u'\xa0', ' ')
+            date = row.find("td", {"class": "regDate"})
+            if date:
+                date = date.text.replace(u'\xa0', ' ')
+            job = {
+                "place": local,
+                "title": title,
+                "time": time,
+                "pay": pay,
+                "date": date
+            }
+            company['jobs'].append(job)
+        write_company(company)
+```
+
+
+
+#### 계획
+
+```text
+기존 영화추천 프로젝트 or 세권분석 프로젝트
+도커로 배포해보고-> 이후에 nginx + 쿠버네티스 배포 디벨롭
+```
+
