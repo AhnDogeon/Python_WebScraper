@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask("SuperScrapper")
 
@@ -6,7 +6,8 @@ app = Flask("SuperScrapper")
 
 @app.route("/")
 def home():
-    return "<h1>Job Search</h1><form><input placeholder='What Job do you wnat?' required/><button>Search</button>"
+    # return "<h1>Job Search</h1><form><input placeholder='What Job do you wnat?' required/><button>Search</button>"
+    return render_template("potato.html")
 # / 아래 주소명과 함수명이 일치할 필요는 없다.
 @app.route("/<username>")
 def potato(username):
