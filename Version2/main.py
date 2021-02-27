@@ -19,6 +19,6 @@ def report():
     # dictionary 로 이루어져있는 request.args
     print(request.args.get('word'))
     word = request.args.get('word')
-    return f"You are looking for a job in {word}"
+    return render_template("report.html", searchingBy=word)
 
 app.run()
