@@ -16,7 +16,9 @@ def potato(username):
 @app.route("/report")
 def report():
     # 사용자가 입력한 것을 알기 위해서 request를 import 후 print해보았다.
+    # dictionary 로 이루어져있는 request.args
     print(request.args.get('word'))
-    return "this is the report"
+    word = request.args.get('word')
+    return f"You are looking for a job in {word}"
 
 app.run()
