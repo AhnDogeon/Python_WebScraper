@@ -17,6 +17,7 @@ def potato(username):
 def report():
     # 사용자가 입력한 것을 알기 위해서 request를 import 후 print해보았다.
     # dictionary 로 이루어져있는 request.args
+    # Flask로 rendering하여 word 또는 다른 변수 넘겨주어 html에서 사용 가능
     print(request.args.get('word'))
     word = request.args.get('word')
     return render_template("report.html", searchingBy=word)
