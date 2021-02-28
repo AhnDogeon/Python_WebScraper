@@ -21,6 +21,8 @@ def report():
     print(request.args.get('word'))
     word = request.args.get('word')
     # 사용자 Human Error 방지
+    # 1. word가 대문자나 섞여서 입력되었을 경우, 소문자로 치환
+    # 2. 아무것도 입력안했을 경우 Null 이므로 Error가 난다. 따라서 홈으로 redirect
     if word:
         word = word.lower()
     else:
