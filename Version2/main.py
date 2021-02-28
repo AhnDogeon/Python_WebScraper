@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 app = Flask("SuperScrapper")
 
@@ -20,6 +20,12 @@ def report():
     # Flask로 rendering하여 word 또는 다른 변수 넘겨주어 html에서 사용 가능
     print(request.args.get('word'))
     word = request.args.get('word')
+    # 사용자 Human Error 방지
+    if word:
+        word = word.lower()
+    else:
+        return redirect("/")
+    
     return render_template("report.html", searchingBy=word)
 
 app.run()
