@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+from scrapper import get_jobs
 
 app = Flask("SuperScrapper")
 
@@ -25,6 +26,8 @@ def report():
     # 2. 아무것도 입력안했을 경우 Null 이므로 Error가 난다. 따라서 홈으로 redirect
     if word:
         word = word.lower()
+        jobs = get_jobs(word)
+        print('jobs는=-============', jobs)
     else:
         return redirect("/")
     
