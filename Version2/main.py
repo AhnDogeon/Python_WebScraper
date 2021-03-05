@@ -30,9 +30,9 @@ def report():
     # 2. 아무것도 입력안했을 경우 Null 이므로 Error가 난다. 따라서 홈으로 redirect
     if word:
         word = word.lower()
-        fromDb = db.get(word)
-        if fromDb:
-            jobs = fromDb
+        existingJobs = db.get(word)
+        if existingJobs:
+            jobs = existingJobs
         else:
             jobs = get_jobs(word)
             db[word] = jobs
