@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-
-
 def get_last_page(url):
     result = requests.get(url)
     soup = BeautifulSoup(result.text, "html.parser")
