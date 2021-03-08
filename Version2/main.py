@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_file
 from scrapper import get_jobs
 from exporter import save_to_file
 
@@ -53,7 +53,7 @@ def export():
         if not jobs:
             raise Exception()
         save_to_file(jobs) 
-        return "lalala"
+        return send_file("jobs.csv")
     except:
         return redirect("/")
     
