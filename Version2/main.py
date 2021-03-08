@@ -41,4 +41,15 @@ def report():
     
     return render_template("report.html", searchingBy=word, resultsNumber = len(jobs), jobs=jobs)
 
+@app.route("/export")
+def export():
+    try:
+        word = request.args.get('word')
+        if not word:
+            raise Exception()
+    except:
+        return redirect("/")
+    
+
+
 app.run()
